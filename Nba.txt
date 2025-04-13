@@ -1,0 +1,176 @@
+DROP DATABASE IF EXISTS Nba;
+CREATE DATABASE Nba
+CHARACTER SET utf8
+COLLATE utf8_hungarian_ci;
+
+USE Nba;
+CREATE TABLE Player (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    age INT,
+    height INT,
+    weight INT,
+    nationality VARCHAR(100),
+    team VARCHAR(100),
+    position VARCHAR(100)
+);
+
+CREATE TABLE Coach (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    age INT,
+    team VARCHAR(100),
+    championships INT
+);
+
+CREATE TABLE seasonP (
+    player_id INT REFERENCES player(id),
+    matches INT,
+    minutes DECIMAL(10,1),
+    ppg DECIMAL(10,1),
+    apg DECIMAL(10,1),
+    rpg DECIMAL(10,1),
+    fgpct DECIMAL(10,1)
+);
+
+CREATE TABLE seasonc (
+    coach_id INT REFERENCES coach(id),
+    wins INT,
+    losses INT,
+    playoff VARCHAR(100)
+);
+
+INSERT INTO player (name, age, height, weight, nationality, team, position) VALUES
+("Giannis Antetokounmpo", 30, 211, 110, "Greece", "Milwaukee Bucks", "PF"),
+("Bam Adebayo", 27, 206, 116, "USA", "Miami Heat", "PF"),
+("Tyrese Haliburton", 25, 196, 84, "USA", "Indiana Pacers", "PG"),
+("Damian Lillard", 34, 188, 88, "USA", "Milwaukee Bucks", "PG"),
+("Jayson Tatum", 27, 203, 95, "USA", "Boston Celtics", "SF"),
+("Paolo Banchero", 22, 208, 113, "USA", "Orlando Magic", "SF"),
+("Scottie Barnes", 23, 201, 108, "USA", "Toronto Raptors", "SF"),
+("Jaylen Brown", 28, 198, 101, "USA", "Boston Celtics", "SF"),
+("Jalen Brunson", 28, 188, 86, "USA", "New York Knicks", "PG"),
+("Tyrese Maxey", 24, 188, 91, "USA", "Philadelphia 76ers", "PG"),
+("Donovan Mitchell", 28, 191, 98, "USA", "Cleveland Cavaliers", "PG"),
+("Julius Randle", 30, 206, 113, "USA", "Minnesota Timberwolves", "SF"),
+("Trae Young", 26, 185, 74, "USA", "Atlanta Hawks", "PG"),
+("Joel Embiid", 31, 213, 127, "Cameroon", "Philadelphia 76ers", "C"),
+("Luka Dončić", 26, 198, 104, "Slovenia", "Los Angeles Lakers", "PG"),
+("Kevin Durant", 36, 211, 109, "USA", "Phoenix Suns", "SF"),
+("Shai Gilgeous-Alexander", 26, 198, 88, "Canada", "Oklahoma City Thunder", "PG"),
+("LeBron James", 40, 206, 113, "USA", "Los Angeles Lakers", "SF"),
+("Nikola Jokić", 30, 211, 129, "Serbia", "Denver Nuggets", "C"),
+("Devin Booker", 28, 198, 93, "USA", "Phoenix Suns", "PG"),
+("Stephen Curry", 37, 188, 84, "USA", "Golden State Warriors", "PG"),
+("Anthony Davis", 32, 208, 115, "USA", "Dallas Mavericks", "C"),
+("Anthony Edwards", 23, 193, 102, "USA", "Minnesota Timberwolves", "SG"),
+("Paul George", 34, 203, 100, "USA", "Philadelphia 76ers", "SF"),
+("Kawhi Leonard", 33, 201, 102, "USA", "Los Angeles Clippers", "SF"),
+("Karl-Anthony Towns", 29, 213, 112, "USA", "New York Knicks", "C");
+
+
+INSERT INTO seasonp (player_id, matches, minutes, ppg, apg, rpg, fgpct) VALUES
+(1, 73, 35.2, 30.4, 6.5, 11.5, 61.1),
+(2, 71, 34.0, 19.3, 3.9, 10.4, 52.1),
+(3, 69, 32.2, 20.1, 10.9, 3.9, 47.7),
+(4, 73, 35.3, 24.3, 7.0, 4.4, 42.4),
+(5, 74, 35.7, 26.9, 4.9, 8.1, 47.7),
+(6, 80, 35.0, 22.6, 5.4, 6.9, 45.5),
+(7, 60, 34.9, 19.9, 6.1, 8.2, 47.5),
+(8, 70, 33.5, 23.0, 3.6, 5.5, 49.1),
+(9, 77, 35.4, 28.7, 6.7, 3.6, 47.9),
+(10, 70, 37.5, 25.9, 6.2, 3.7, 45.0),
+(11, 55, 35.3, 26.6, 6.1, 5.1, 46.2),
+(12, 46, 35.4, 24.0, 5.0, 9.2, 47.2),
+(13, 54, 36.0, 25.7, 10.8, 2.8, 43.0),
+(14, 39, 33.6, 34.7, 5.6, 11.0, 52.9),
+(15, 70, 37.5, 33.9, 9.8, 9.2, 48.7),
+(16, 75, 37.2, 27.1, 5.0, 6.6, 52.3),
+(17, 75, 34.0, 30.1, 6.2, 5.5, 53.5),
+(18, 71, 35.3, 25.7, 8.3, 7.3, 54.0),
+(19, 79, 34.6, 26.4, 9.0, 12.4, 58.3),
+(20, 68, 36.0, 27.1, 6.9, 4.5, 49.2),
+(21, 74, 32.7, 26.4, 5.1, 4.0, 45.0),
+(22, 76, 35.5, 24.7, 3.5, 12.6, 55.6),
+(23, 79, 35.1, 25.9, 5.1, 5.4, 46.1),
+(24, 64, 33.8, 22.6, 3.5, 5.2, 47.1),
+(25, 68, 34.3, 23.7, 3.6, 6.1, 52.5),
+(26, 62, 32.7, 21.8, 3.0, 8.1, 50.4);
+
+INSERT INTO coach (name, age, team, championships) VALUES
+("Quin Snyder", 58, "Atlanta Hawks", 0),
+("Joe Mazzulla", 36, "Boston Celtics", 1),
+("Jacque Vaughn", 50, "Brooklyn Nets", 0),
+("Kevin Ollie", 52, "Brooklyn Nets", 0),
+("Billy Donovan", 59, "Chicago Bulls", 0),
+("Steve Clifford",63, "Charlotte Hornets", 0),
+("J.B. Bickerstaff", 46, "Cleveland Cavaliers", 0),
+("Jason Kidd", 52, "Dallas Mavericks", 0),
+("Michael Malone", 53, "Denver Nuggets", 1),
+("Monty Williams", 53, "Detroit Pistons", 0),
+("Steve Kerr", 59, "Golden State Warriors", 4),
+("Ime Udoka", 47, "Houston Rockets", 0),
+("Rick Carlisle", 65, "Indiana Pacers", 1),
+("Tyronn Lue", 47, "Los Angeles Clippers", 1),
+("Darvin Ham", 51, "Los Angeles Lakers", 0),
+("Taylor Jenkins", 40, "Memphis Grizzlies", 0),
+("Erik Spoelstra", 54, "Miami Heat", 2),
+("Adrian Griffin", 50, "Milwaukee Bucks", 0),
+("Joe Prunty", 56, "Milwaukee Bucks", 0),
+("Doc Rivers", 63, "Milwaukee Bucks", 1),
+("Chris Finch", 55, "Minnesota Timberwolves", 0),
+("Willie Green", 43, "New Orleans Pelicans", 0),
+("Tom Thibodeau", 67, "New York Knicks", 0),
+("Mark Daigneault", 40, "Oklahoma City Thunder", 0),
+("Jamahl Mosley", 46, "Orlando Magic", 0),
+("Nick Nurse", 57, "Philadelphia 76ers", 1),
+("Frank Vogel", 51, "Phoenix Suns", 1),
+("Chauncey Billups", 48, "Portland Trail Blazers", 0),
+("Mike Brown", 55, "Sacramento Kings", 0),
+("Gregg Popovich", 76, "San Antonio Spurs", 5),
+("Darko Rajakovic", 46, "Toronto Raptors", 0),
+("Will Hardy", 37, "Utah Jazz", 0),
+("Wes Unseld", 49, "Washington Wizards", 0),
+("Brian Keefe", 49, "Washington Wizards", 0);
+
+INSERT INTO seasonc (coach_id, wins, losses, playoff) VALUES
+(1,36,46,"not qualified"),
+(2,64,18,"qualified"),
+(3,21,33,"not qualified"),
+(4,11,17,"not qualified"),
+(5,39,43,"not qualified"),
+(6,21,61,"not qualified"),
+(7,48,34,"qualified"),
+(8,50,32,"qualified"),
+(9,57,25,"qualified"),
+(10,14,68,"not qualified"),
+(11,46,36,"not qualified"),
+(12,41,41,"not qualified"),
+(13,47,35,"qualified"),
+(14,51,31,"qualified"),
+(15,47,35,"qualified"),
+(16,27,55,"not qualified"),
+(17,46,36,"qualified"),
+(18,30,13,"not qualified"),
+(19,2,1,"not qualified"),
+(20,17,19,"qualified"),
+(21,56,26,"qualified"),
+(22,49,33,"qualified"),
+(23,50,32,"qualified"),
+(24,57,25,"qualified"),
+(25,47,35,"qualified"),
+(26,47,35,"qualified"),
+(27,49,33,"qualified"),
+(28,21,61,"not qualified"),
+(29,46,36,"not qualified"),
+(30,22,60,"not qualified"),
+(31,25,57,"not qualified"),
+(32,31,51,"not qualified"),
+(33,7,36,"not qualified"),
+(34,8,31,"not qualified");
+
+
+
+
+
+
